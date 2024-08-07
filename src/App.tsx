@@ -1,10 +1,10 @@
 import React from 'react';
-import CharacterSearch from './components/CharacterSearch';
+import Characters from './components/Characters'
 
 const App = () => {
     return (
         <div className= 'App' >
-            <CharacterSearch />
+            <Characters />
         </div>
     );
 };
