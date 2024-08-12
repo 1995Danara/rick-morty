@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import client from './ApolloClient';
-import './styles.css';
 
 import Characters from './components/Characters'
 

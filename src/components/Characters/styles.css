@@ -1,0 +1,23 @@
+.main-container {
+    width: 1200px;
+    height: 1236px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+
+  .container {
+    width: 1200px; 
+    height: 1236px; 
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; 
+    border: 1px solid #ddd; 
+    background-color: #f9f9f9; 
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+  }
+  
