@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 import CharacterCard from '../CharacterCard';
 import Party from '../Party';
-import {Character} from './interface';
+import { Character } from './interface';
 import './styles.css';
 
 const GET_CHARACTERS = gql`
@@ -21,6 +21,7 @@ const GET_CHARACTERS = gql`
 const Characters = () => {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
   const [selectedCharacters, setSelectedCharacters] = useState<{
     rick: Character | null;
     morty: Character | null;
@@ -28,6 +29,12 @@ const Characters = () => {
     rick: null,
     morty: null,
   });
+
+  useEffect(() => {
+    if (data) {
+      setFilteredCharacters(data.characters.results);
+    }
+  }, [data]);
 
   const handleSelectCharacter = (character: Character, slot: 'rick' | 'morty') => {
     setSelectedCharacters((prev) => ({
@@ -44,6 +51,7 @@ const Characters = () => {
 
   const handleDrop = (slot: 'rick' | 'morty') => {
     return (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
       const character = JSON.parse(event.dataTransfer.getData('character')) as Character;
       handleSelectCharacter(character, slot);
     };
@@ -52,10 +60,12 @@ const Characters = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const filteredCharacters = data.characters.results.filter((character: Character) =>
+  const filteredCharactersList = filteredCharacters.filter((character: Character) =>
     character.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  const handleDelete = (id: string) => {
+    setFilteredCharacters((prev) => prev.filter(character => character.id !== id));
+  };
   return (
     <div className="main-container">
       <input
@@ -67,11 +77,11 @@ const Characters = () => {
       />
 
       <div className="container">
-        {filteredCharacters.map((character: Character) => (
+        {filteredCharactersList.map((character: Character) => (
           <CharacterCard
             key={character.id}
             character={character}
-            onDelete={(id) => console.log(`Delete character with id ${id}`)}
+            onDelete={handleDelete} 
             onDragStart={handleDragStart(character)}
           />
         ))}
