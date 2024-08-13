@@ -21,3 +21,19 @@
     justify-content: center; 
   }
   
+  .search-input::placeholder {
+    font-size: 16px; 
+    color: #888;
+    text-align: left;
+  }
+
+  input[type="text"] {
+    width: 810px; 
+    height: 80px; 
+    padding: 10px; 
+    border: 1px solid #ccc;  
+    font-size: 16px;
+    box-sizing: border-box;
+    display: block; 
+    margin: 0 auto;
+  }
