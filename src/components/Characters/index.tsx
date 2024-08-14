@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery,} from '@apollo/client';
 
 import CharacterCard from '../CharacterCard';
 import Party from '../Party';
 import { Character } from './interface';
 import './styles.css';
-
-const GET_CHARACTERS = gql`
-  query {
-    characters {
-      results {
-        id
-        name
-        image
-      }
-    }
-  }
-`;
+import { GET_CHARACTERS } from './charactersQuery'; 
 
 const Characters = () => {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
@@ -63,6 +52,7 @@ const Characters = () => {
   const filteredCharactersList = filteredCharacters.filter((character: Character) =>
     character.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  
   const handleDelete = (id: string) => {
     setFilteredCharacters((prev) => prev.filter(character => character.id !== id));
   };

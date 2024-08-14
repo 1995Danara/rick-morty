@@ -26,7 +26,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #eee;
+    background-color: #eeeeeed8;
     position: relative;
+  }
+  
+  .slot-text {
+    width: 180px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    background-color: transparent; 
+    position: absolute;
+    bottom: 0;
   }
   

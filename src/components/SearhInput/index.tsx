@@ -2,7 +2,7 @@ import React , {useState, useEffect, ChangeEvent} from 'react';
 import debounce from 'lodash/debounce';
 
 import {SearchInputProps} from './interface';
-import './styles.css';
+
 
 const SearchInput = ({onSearch} :SearchInputProps) => {
 const [request, setRequest] = useState <string> ('');
