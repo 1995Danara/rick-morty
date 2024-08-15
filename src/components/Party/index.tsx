@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Character} from './interface';
+import { Character } from './interface';
 import './styles.css';
 
 interface PartyProps {
@@ -8,34 +8,25 @@ interface PartyProps {
     rick: Character | null;
     morty: Character | null;
   };
-  onDrop: (slot: 'rick' | 'morty') => (event: React.DragEvent<HTMLDivElement>) => void;
 }
 
-const Party = ({ selectedCharacters, onDrop }:PartyProps) => {
+const Party = ({ selectedCharacters }: PartyProps) => {
   return (
     <div className="party-container">
-      <h2>PARTY</h2>
+      <h2 className="party-title">PARTY</h2>
       <div className="slot-container">
-        <div
-          className="slot"
-          onDrop={onDrop('rick')}
-          onDragOver={(e) => e.preventDefault()}
-        >
+        <div className="slot">
           {selectedCharacters.rick ? (
             <img src={selectedCharacters.rick.image} alt="Rick" />
           ) : (
-            <p className="slot-text">RICK</p>
+            <span className="slot-text">RICK</span>
           )}
         </div>
-        <div
-          className="slot"
-          onDrop={onDrop('morty')}
-          onDragOver={(e) => e.preventDefault()}
-        >
+        <div className="slot">
           {selectedCharacters.morty ? (
             <img src={selectedCharacters.morty.image} alt="Morty" />
           ) : (
-            <p className="slot-text">MORTY</p>
+            <span className="slot-text">MORTY</span>
           )}
         </div>
       </div>

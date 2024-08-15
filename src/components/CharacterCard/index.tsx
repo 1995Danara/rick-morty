@@ -1,21 +1,37 @@
 import React from 'react';
 
-import {Character} from './interface';
+import { Character} from './interface';
 import './styles.css';
-
-interface CharacterCardProps {
-    character:Character;
+  
+export interface CharacterCardProps {
+    character: Character;
     onDelete: (id: string) => void;
-    onDragStart: (event: React.DragEvent<HTMLDivElement>) => void; 
-};
+    onClick: () => void;  
+}
 
-const CharacterCard = ({character,onDragStart, onDelete}:CharacterCardProps) => {
+const CharacterCard = ({ character, onDelete, onClick }: CharacterCardProps) => {
     return (
-        <div className ='character-card'  draggable onDragStart={onDragStart} >
-            <img src = {character.image} alt = {character.name} />
-            <button className="delete-button" onClick={() => onDelete(character.id)}>X</button>
-        </div>
+     <div className='character-card' onClick={onClick}>
+      <img 
+        src={character.image} 
+        alt={character.name} 
+        className='character-card-image' 
+      />
+      <button
+        className="delete-button" 
+        onClick={(e) => {
+          e.stopPropagation(); 
+          onDelete(character.id);
+        }}
+      >
+      </button>
+     </div>
     );
 };
 
 export default CharacterCard;
+
+
+
+
+

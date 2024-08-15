@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery,} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import CharacterCard from '../CharacterCard';
 import Party from '../Party';
 import { Character } from './interface';
 import './styles.css';
-import { GET_CHARACTERS } from './charactersQuery'; 
+import { GET_CHARACTERS } from './charactersQuery';
 
 const Characters = () => {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
@@ -32,18 +32,12 @@ const Characters = () => {
     }));
   };
 
-  const handleDragStart = (character: Character) => {
-    return (event: React.DragEvent<HTMLDivElement>) => {
-      event.dataTransfer.setData('character', JSON.stringify(character));
-    };
-  };
-
-  const handleDrop = (slot: 'rick' | 'morty') => {
-    return (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      const character = JSON.parse(event.dataTransfer.getData('character')) as Character;
-      handleSelectCharacter(character, slot);
-    };
+  const handleClickCharacter = (character: Character) => {
+    if (character.name.includes('Rick')) {
+      handleSelectCharacter(character, 'rick');
+    } else if (character.name.includes('Morty')) {
+      handleSelectCharacter(character, 'morty');
+    }
   };
 
   if (loading) return <p>Loading...</p>;
@@ -52,10 +46,11 @@ const Characters = () => {
   const filteredCharactersList = filteredCharacters.filter((character: Character) =>
     character.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
+
   const handleDelete = (id: string) => {
     setFilteredCharacters((prev) => prev.filter(character => character.id !== id));
   };
+
   return (
     <div className="main-container">
       <input
@@ -71,16 +66,13 @@ const Characters = () => {
           <CharacterCard
             key={character.id}
             character={character}
-            onDelete={handleDelete} 
-            onDragStart={handleDragStart(character)}
+            onDelete={handleDelete}
+            onClick={() => handleClickCharacter(character)} 
           />
         ))}
       </div>
 
-      <Party
-        selectedCharacters={selectedCharacters}
-        onDrop={handleDrop}
-      />
+      <Party selectedCharacters={selectedCharacters} />
     </div>
   );
 };
