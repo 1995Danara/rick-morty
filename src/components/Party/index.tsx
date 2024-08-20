@@ -1,14 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import { Character } from './interface';
-import './styles.css';
-
-interface PartyProps {
-  selectedCharacters: {
-    rick: Character | null;
-    morty: Character | null;
-  };
-}
+import { PartyProps } from './interface'
+import './styles.css'
 
 const Party = ({ selectedCharacters }: PartyProps) => {
   return (
@@ -31,7 +24,7 @@ const Party = ({ selectedCharacters }: PartyProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Party;
+export default Party

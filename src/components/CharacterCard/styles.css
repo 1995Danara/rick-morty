@@ -27,10 +27,10 @@
   font-size: 20px;
   cursor: pointer;
   z-index: 10;
-  padding: 0; 
+  padding: 0;
 }
 
 .delete-button::before {
   content: '✕';
-  font-size: 15px; 
+  font-size: 15px;
 }

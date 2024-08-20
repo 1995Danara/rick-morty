@@ -1,41 +1,39 @@
-import React , {useState, useEffect, ChangeEvent} from 'react';
-import debounce from 'lodash/debounce';
+import React, { useState, useEffect, ChangeEvent } from 'react'
+import debounce from 'lodash/debounce'
 
-import {SearchInputProps} from './interface';
+import { SearchInputProps } from './interface'
 
+const SearchInput = ({ onSearch }: SearchInputProps) => {
+  const [request, setRequest] = useState<string>('')
 
-const SearchInput = ({onSearch} :SearchInputProps) => {
-const [request, setRequest] = useState <string> ('');
-
-
-const debounceSearch = debounce ((query:string) => {
-    if(query.length > 2) {
-      onSearch(query);
+  const debounceSearch = debounce((query: string) => {
+    if (query.length > 2) {
+      onSearch(query)
     }
-}, 300);
+  }, 300)
 
-const handleInputChange = (event: ChangeEvent <HTMLInputElement>) => {
-  const value = event.target.value
-  setRequest(value);
-  debounceSearch(value);
-};
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setRequest(value)
+    debounceSearch(value)
+  }
 
-useEffect(() => {
-  return () => {
-    debounceSearch.cancel();
-  };
-}, [debounceSearch]);
+  useEffect(() => {
+    return () => {
+      debounceSearch.cancel()
+    }
+  }, [debounceSearch])
 
-return (
-  <div>
-    <input
-      type="text"
-      value={request}
-      onChange={handleInputChange}
-      placeholder="RICK"
-    />
-  </div>
-);
-};
+  return (
+    <div>
+      <input
+        type="text"
+        value={request}
+        onChange={handleInputChange}
+        placeholder="RICK"
+      />
+    </div>
+  )
+}
 
-export default SearchInput;
+export default SearchInput

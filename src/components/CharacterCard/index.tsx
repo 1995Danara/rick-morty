@@ -1,37 +1,29 @@
-import React from 'react';
+import React from 'react'
 
-import { Character} from './interface';
-import './styles.css';
-  
-export interface CharacterCardProps {
-    character: Character;
-    onDelete: (id: string) => void;
-    onClick: () => void;  
-}
+import { CharacterCardProps } from './interface'
+import './styles.css'
 
-const CharacterCard = ({ character, onDelete, onClick }: CharacterCardProps) => {
-    return (
-     <div className='character-card' onClick={onClick}>
-      <img 
-        src={character.image} 
-        alt={character.name} 
-        className='character-card-image' 
+const CharacterCard = ({
+  character,
+  onDelete,
+  onClick,
+}: CharacterCardProps) => {
+  return (
+    <div className="character-card" onClick={onClick}>
+      <img
+        src={character.image}
+        alt={character.name}
+        className="character-card-image"
       />
       <button
-        className="delete-button" 
+        className="delete-button"
         onClick={(e) => {
-          e.stopPropagation(); 
-          onDelete(character.id);
+          e.stopPropagation()
+          onDelete(character.id)
         }}
-      >
-      </button>
-     </div>
-    );
-};
+      ></button>
+    </div>
+  )
+}
 
-export default CharacterCard;
-
-
-
-
-
+export default CharacterCard
