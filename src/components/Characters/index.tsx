@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import debounce from 'lodash/debounce'
+import { AnimatePresence } from 'framer-motion'
 
 import CharacterCard from '../CharacterCard'
 import Party from '../Party'
@@ -95,16 +96,17 @@ const Characters = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-
       <div className="container">
-        {filteredCharactersList.map((character: Character) => (
-          <CharacterCard
-            key={character.id}
-            character={character}
-            onDelete={handleDelete}
-            onClick={() => handleClickCharacter(character)}
-          />
-        ))}
+        <AnimatePresence>
+          {filteredCharactersList.map((character: Character) => (
+            <CharacterCard
+              key={character.id}
+              character={character}
+              onDelete={handleDelete}
+              onClick={() => handleClickCharacter(character)}
+            />
+          ))}
+        </AnimatePresence>
       </div>
       <Party selectedCharacters={selectedCharacters} />
     </div>

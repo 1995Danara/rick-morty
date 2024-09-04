@@ -1,19 +1,22 @@
 import React from 'react'
-
+import { motion } from 'framer-motion'
 import { CharacterCardProps } from './interface'
 import './styles.css'
 
-const CharacterCard = ({
-  character,
-  onDelete,
-  onClick,
-}: CharacterCardProps) => {
+function CharacterCard({ character, onClick, onDelete }: CharacterCardProps) {
   return (
-    <div className="character-card" onClick={onClick}>
+    <motion.div
+      className="character-card"
+      onClick={onClick}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3 }}
+    >
       <img
+        className="character-card-image"
         src={character.image}
         alt={character.name}
-        className="character-card-image"
       />
       <button
         className="delete-button"
@@ -22,7 +25,7 @@ const CharacterCard = ({
           onDelete(character.id)
         }}
       ></button>
-    </div>
+    </motion.div>
   )
 }
 
