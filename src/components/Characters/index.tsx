@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useLazyQuery } from '@apollo/client'
-import debounce from 'lodash/debounce'
 import { AnimatePresence } from 'framer-motion'
 
 import CharacterCard from '../CharacterCard'
 import Party from '../Party'
+import SearchInput from '../SearhInput'
 import { Character } from './interface'
 import './styles.css'
 import { GET_CHARACTERS } from './Query'
@@ -25,20 +25,13 @@ const Characters = () => {
     fetchPolicy: 'network-only',
   })
 
-  const debouncedSearch = debounce((query: string) => {
-    if (query.length > 2) {
-      loadCharacters({ variables: { search: query } })
+  useEffect(() => {
+    if (searchQuery.length > 2) {
+      loadCharacters({ variables: { search: searchQuery } })
     } else {
       setFilteredCharacters([])
     }
-  }, 300)
-
-  useEffect(() => {
-    debouncedSearch(searchQuery)
-    return () => {
-      debouncedSearch.cancel()
-    }
-  }, [searchQuery, debouncedSearch])
+  }, [searchQuery, loadCharacters])
 
   useEffect(() => {
     if (!loading && data) {
@@ -89,13 +82,7 @@ const Characters = () => {
 
   return (
     <div className="main-container">
-      <input
-        type="text"
-        className="search-input"
-        placeholder="RICK"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <SearchInput onSearch={setSearchQuery} />
       <div className="container">
         <AnimatePresence>
           {filteredCharactersList.map((character: Character) => (
