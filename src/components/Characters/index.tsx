@@ -26,7 +26,7 @@ const Characters = () => {
   })
 
   useEffect(() => {
-    if (searchQuery.length > 2) {
+    if (searchQuery) {
       loadCharacters({ variables: { search: searchQuery } })
     } else {
       setFilteredCharacters([])
