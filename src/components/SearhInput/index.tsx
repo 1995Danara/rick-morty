@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent, useCallback } from 'react'
 import debounce from 'lodash/debounce'
 
 import { SearchInputProps } from './interface'
@@ -6,11 +6,14 @@ import { SearchInputProps } from './interface'
 const SearchInput = ({ onSearch }: SearchInputProps) => {
   const [request, setRequest] = useState<string>('')
 
-  const debounceSearch = debounce((query: string) => {
-    if (query.length > 2) {
-      onSearch(query)
-    }
-  }, 300)
+  const debounceSearch = useCallback(
+    debounce((query: string) => {
+      if (query.length > 2) {
+        onSearch(query)
+      }
+    }, 300),
+    [onSearch],
+  )
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
