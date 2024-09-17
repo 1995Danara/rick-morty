@@ -1,8 +1,4 @@
-export interface Character {
-  id: string
-  name: string
-  image: string
-}
+import { Character } from '../Characters/interface'
 export interface PartyProps {
   selectedCharacters: {
     rick: Character | null

@@ -1,8 +1,5 @@
-interface Character {
-  id: string
-  name: string
-  image: string
-}
+import { Character } from '../Characters/interface'
+
 export interface CharacterCardProps {
   character: Character
   onDelete: (id: string) => void
