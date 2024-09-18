@@ -2,8 +2,8 @@
   width: 1200px;
   height: 1236px;
   box-sizing: border-box;
-  overflow-y: auto;
-  background-color: #f9f9f9;
+  overflow: visible;
+  background-color: white;
   margin-left: auto;
   margin-right: auto;
 }
@@ -11,8 +11,7 @@
 .container {
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
-  background-color: #f9f9f9;
+  background-color: white;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;

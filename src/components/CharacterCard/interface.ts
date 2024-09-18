@@ -1,4 +1,4 @@
-import { Character } from '../Characters/interface'
+import { Character } from '../../types/types'
 
 export interface CharacterCardProps {
   character: Character

@@ -1,4 +1,5 @@
-import { Character } from '../Characters/interface'
+import { Character } from '../../types/types'
+
 export interface PartyProps {
   selectedCharacters: {
     rick: Character | null

@@ -5,13 +5,12 @@ import { AnimatePresence } from 'framer-motion'
 import CharacterCard from '../CharacterCard'
 import Party from '../Party'
 import SearchInput from '../SearhInput'
-import { Character } from './interface'
+import { Character } from '../../types/types'
 import './styles.css'
 import { GET_CHARACTERS } from './Query'
 
 const Characters = () => {
   const [searchQuery, setSearchQuery] = useState('')
-  const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([])
   const [selectedCharacters, setSelectedCharacters] = useState<{
     rick: Character | null
     morty: Character | null
@@ -21,33 +20,17 @@ const Characters = () => {
   })
   const [removedCharacterIds, setRemovedCharacterIds] = useState<string[]>([])
 
-  const [loadCharacters, { loading, data }] = useLazyQuery(GET_CHARACTERS, {
+  const [loadCharacters, { data }] = useLazyQuery(GET_CHARACTERS, {
     fetchPolicy: 'network-only',
   })
 
   useEffect(() => {
     if (searchQuery) {
       loadCharacters({ variables: { search: searchQuery } })
-    } else {
-      setFilteredCharacters([])
     }
-  }, [searchQuery, loadCharacters])
+  }, [searchQuery])
 
-  useEffect(() => {
-    if (!loading && data) {
-      setFilteredCharacters((prev) => {
-        const updatedCharacters = data.characters.results.filter(
-          (newCharacter: Character) =>
-            !prev.find(
-              (prevCharacter) => prevCharacter.id === newCharacter.id,
-            ) && !removedCharacterIds.includes(newCharacter.id),
-        )
-        return [...prev, ...updatedCharacters]
-      })
-    }
-  }, [data, loading, removedCharacterIds])
-
-  const handleSelectCharacter = useCallback(
+  const selectCharacter = useCallback(
     (character: Character, slot: 'rick' | 'morty') => {
       setSelectedCharacters((prev) => ({
         ...prev,
@@ -60,39 +43,36 @@ const Characters = () => {
   const handleClickCharacter = useCallback(
     (character: Character) => {
       if (character.name.includes('Rick')) {
-        handleSelectCharacter(character, 'rick')
+        selectCharacter(character, 'rick')
       } else if (character.name.includes('Morty')) {
-        handleSelectCharacter(character, 'morty')
+        selectCharacter(character, 'morty')
       }
     },
-    [handleSelectCharacter],
+    [selectCharacter],
   )
 
-  const filteredCharactersList = filteredCharacters.filter(
-    (character: Character) =>
-      character.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
-
-  const handleDelete = useCallback((id: string) => {
+  const handleDelete = (id: string) => {
     setRemovedCharacterIds((prev) => [...prev, id])
-    setFilteredCharacters((prev) =>
-      prev.filter((character) => character.id !== id),
-    )
-  }, [])
+  }
 
   return (
     <div className="main-container">
       <SearchInput onSearch={setSearchQuery} />
       <div className="container">
         <AnimatePresence>
-          {filteredCharactersList.map((character: Character) => (
-            <CharacterCard
-              key={character.id}
-              character={character}
-              onDelete={handleDelete}
-              onClick={() => handleClickCharacter(character)}
-            />
-          ))}
+          {data?.characters?.results
+            .filter(
+              (character: Character) =>
+                !removedCharacterIds.includes(character.id),
+            )
+            .map((character: Character) => (
+              <CharacterCard
+                key={character.id}
+                character={character}
+                onDelete={handleDelete}
+                onClick={() => handleClickCharacter(character)}
+              />
+            ))}
         </AnimatePresence>
       </div>
       <Party selectedCharacters={selectedCharacters} />
