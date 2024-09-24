@@ -40,17 +40,13 @@ const Characters = () => {
     [],
   )
 
-  const handleClickCharacter = useCallback(
-    (character: Character) => {
-      if (character.name.includes('Rick')) {
-        selectCharacter(character, 'rick')
-      } else if (character.name.includes('Morty')) {
-        selectCharacter(character, 'morty')
-      }
-    },
-    [selectCharacter],
-  )
-
+  const handleClickCharacter = (character: Character) => {
+    if (character.name.includes('Rick')) {
+      selectCharacter(character, 'rick')
+    } else if (character.name.includes('Morty')) {
+      selectCharacter(character, 'morty')
+    }
+  }
   const handleDelete = (id: string) => {
     setRemovedCharacterIds((prev) => [...prev, id])
   }
