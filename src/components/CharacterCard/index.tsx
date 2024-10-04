@@ -1,5 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { Button } from '@mui/material'
+
 import { CharacterCardProps } from './interface'
 import './styles.css'
 
@@ -18,15 +20,15 @@ function CharacterCard({ character, onClick, onDelete }: CharacterCardProps) {
         src={character.image}
         alt={character.name}
       />
-      <button
-        className="delete-button"
+      <Button
         onClick={(e) => {
           e.stopPropagation()
           onDelete(character.id)
         }}
-      ></button>
+      >
+        X
+      </Button>
     </motion.div>
   )
 }
-
 export default CharacterCard
